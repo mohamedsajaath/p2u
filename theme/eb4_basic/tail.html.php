@@ -25,80 +25,69 @@ if (!defined('_EYOOM_')) exit;
 	</div><?php /* End .basic-body */ ?>
 
 	<?php /*----- footer 시작 -----*/ ?>
-	<footer class="footer">
-		<div class="container">
-			<div class="footer-top">
-				<div class="footer-nav">
-					<a href="<?php echo get_eyoom_pretty_url('page','provision'); ?>">서비스이용약관</a>
-					<a href="<?php echo get_eyoom_pretty_url('page','privacy'); ?>">개인정보처리방침</a>
-					<a href="<?php echo get_eyoom_pretty_url('page','noemail'); ?>">이메일무단수집거부</a>
-				</div>
-				<div class="footer-right-nav">
-					<a href="<?php echo G5_BBS_URL; ?>/faq.php">FAQ</a>
-					<a href="<?php echo G5_BBS_URL; ?>/qalist.php">1:1문의</a>
-				</div>
-			</div>
 
-			<div class="footer-cont-info">
-				<?php if ($is_admin == 'super' && !G5_IS_MOBILE) { ?>
-				<div class="adm-edit-btn btn-edit-mode hidden-xs hidden-sm" style="top:-31px">
-					<div class="btn-group">
-						<a href="<?php echo G5_ADMIN_URL; ?>/?dir=theme&amp;pid=biz_info&amp;amode=biz&amp;thema=<?php echo $theme; ?>&amp;wmode=1" onclick="eb_admset_modal(this.href); return false;" class="ae-btn-l"><i class="far fa-edit"></i> 기업정보 설정</a>
-						<a href="<?php echo G5_ADMIN_URL; ?>/?dir=theme&amp;pid=biz_info&amp;amode=biz&amp;thema=<?php echo $theme; ?>" target="_blank" class="ae-btn-r" title="새창 열기">
-							<i class="fas fa-external-link-alt"></i>
-						</a>
-						<button type="button" class="ae-btn-info" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-html="true" data-bs-content="
-							<span class='f-s-13r'>
-							<strong class='text-indigo'>기업정보 사용가능한 변수</strong><br>
-							<div class='margin-hr-10'></div>
-							<strong class='text-indigo'>[설정정보]</strong><br>
-							회사명 : $bizinfo['bi_company_name']<br>
-							사업자등록번호 : $bizinfo['bi_company_bizno']<br>
-							대표자명 : $bizinfo['bi_company_ceo']<br>
-							대표전화 : $bizinfo['bi_company_tel']<br>
-							팩스번호 : $bizinfo['bi_company_fax']<br>
-							통신판매업 : $bizinfo['bi_company_sellno']<br>
-							부가통신사업자 : $bizinfo['bi_company_bugano']<br>
-							정보관리책임자 : $bizinfo['bi_company_infoman']<br>
-							정보책임자메일 : $bizinfo['bi_company_infomail']<br>
-							우편번호 : $bizinfo['bi_company_zip']<br>
-							주소1 : $bizinfo['bi_company_addr1']<br>
-							주소2 : $bizinfo['bi_company_addr2']<br>
-							주소3 : $bizinfo['bi_company_addr3']<br>
-							고객센터1 : $bizinfo['bi_cs_tel1']<br>
-							고객센터2 : $bizinfo['bi_cs_tel2']<br>
-							고객센터팩스 : $bizinfo['bi_cs_fax']<br>
-							고객센터메일 : $bizinfo['bi_cs_email']<br>
-							상담시간 : $bizinfo['bi_cs_time']<br>
-							휴무안내 : $bizinfo['bi_cs_closed']
-							</span>
-						"><i class="fas fa-question-circle"></i></button>
-					</div>
-				</div>
-				<?php } ?>
-				<strong class="text-black"><?php echo $bizinfo['bi_company_name']; ?></strong>
-				<span class="info-divider">|</span>
-				<span>대표 : <?php echo $bizinfo['bi_company_ceo']; ?></span>
-				<span class="info-divider">|</span>
-				<span>사업자등록번호 : <?php echo $bizinfo['bi_company_bizno']; ?></span>
-				<span class="info-divider">|</span>
-				<?php if($bizinfo['bi_company_sellno']) { ?>
-				<span>통신판매업번호 : <?php echo $bizinfo['bi_company_sellno']; ?></span>
-				<span class="info-divider">|</span>
-				<?php } ?>
-				<span>주소 : <?php echo $bizinfo['bi_company_zip']; ?> <?php echo $bizinfo['bi_company_addr1']; ?> <?php echo $bizinfo['bi_company_addr2']; ?> <?php echo $bizinfo['bi_company_addr3']; ?></span><br>
-				<span>E-mail : <a href="mailto:<?php echo $bizinfo['bi_cs_email']; ?>"><?php echo $bizinfo['bi_cs_email']; ?></a></span>
-				<span class="info-divider">|</span>
-				<span>T. <?php echo $bizinfo['bi_cs_tel1']; ?></span>
-				<span class="info-divider">|</span>
-				<span>F. <?php echo $bizinfo['bi_cs_fax']; ?></span>
-			</div>
+    <footer class="footer modern-footer">
+        <div class="container">
+            <div class="row footer-nav-logo-wrapper justify-content-between">
+                <!-- Logo -->
+                <div class="col-md-3 col-12 logo-wrap">
+                    <a href="<?php echo G5_URL; ?>" class="title-logo">
+                        <?php if ($logo == 'text') { ?>
+                            <h1><?php echo $config['cf_title']; ?></h1>
+                        <?php } else if ($logo == 'image') { ?>
+                            <?php if (file_exists($top_logo) && !is_dir($top_logo)) { ?>
+                                <img src="<?php echo $logo_src['bottom']; ?>" class="site-logo"
+                                     alt="<?php echo $config['cf_title']; ?>">
+                            <?php } else { ?>
+                                <img src="<?php echo EYOOM_THEME_URL; ?>/image/site_logo.svg" class="site-logo"
+                                     alt="<?php echo $config['cf_title']; ?>">
+                            <?php } ?>
+                        <?php } ?>
+                    </a>
+                </div>
 
-			<div class="footer-copyright">
-				<span>Copyright </span>&copy; <strong class="text-black f-w-400"><?php echo $config['cf_title']; ?></strong>. All Rights Reserved.
-			</div>
-		</div>
-	</footer>
+                <!-- Navigation -->
+                <div class="col-md-8 col-12 d-flex justify-content-between align-items-center">
+                    <ul class="nav-lists d-flex gap-4 flex-wrap align-items-center justify-content-end  w-100">
+                        <li>
+                            <a href="#">카카오톡 채널추가</a>
+                        </li>
+                        <li>
+                            <a href="#">상품후기</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo G5_BBS_URL; ?>/qalist.php">1:1문의</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo G5_BBS_URL; ?>/faq.php">FAQ</a>
+                        </li>
+                        <li>
+                            <a href="#">공지사항</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="footer-middle-text-content">
+                <p class="footer-heading-content">CS CENTER 1522-2041 평일 10:00 ~ 17:00 (점심 12:00 ~ 13:00)</p>
+                <p class="footer-content">soo@p2u.kr 토요일, 일요일, 공휴일은 휴무입니다. 근무시간 이후 문의는 1:1 문의를 이용해주세요.</p>
+                <br/>
+                <p class="heading-content">주식회사 포인투유 대표 : 최병호</p>
+                <p class="footer-content">사업자 등록번호 : 443-86-024-22 통신판매업 : 제2024-서울금천-0326호 주소 : 08502 서울 금천구 가산디지털1로 212 202-52호 (가산동, 코오롱디지털타워애스턴)</p>
+                <br/>
+                <p class="footer-content">Copyright © P2U :: 포인투유. All Rights Reserved</p>
+            </div>
+
+            <div class="footer-bottom-links">
+                <ul class="d-flex justify-content-start gap-4">
+                    <li><a href="<?php echo get_eyoom_pretty_url('page','provision'); ?>">서비스이용약관</a></li>
+                    <li><a href="<?php echo get_eyoom_pretty_url('page','privacy'); ?>">개인정보처리방침</a></li>
+                    <li><a href="<?php echo get_eyoom_pretty_url('page','noemail'); ?>">이메일무단수집거부</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
 	<?php /*----- footer 끝 -----*/ ?>
 </div>
 <?php /*----- wrapper 끝 -----*/ ?>
