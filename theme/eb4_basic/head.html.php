@@ -31,7 +31,7 @@ $is_megamenu = 'yes';
     ?>
 
     <?php /*----- header 시작 -----*/ ?>
-    <header class="header-wrap <?php if(!defined('_INDEX_')) { ?>page-header-wrap<?php } ?>">
+    <header class="header-wrap d-none <?php if(!defined('_INDEX_')) { ?>page-header-wrap<?php } ?>">
         <div class="top-header">
             <div class="container">
                 <div class="row align-items-center position-relative">
@@ -61,310 +61,224 @@ $is_megamenu = 'yes';
                             <?php } ?>
                         </ul>
                     </div>
-                    <div class="col-lg-6 clearfix">
-                        <ul class="top-header-nav list-unstyled thn-end">
-                            <?php if ($is_member) {  ?>
-                                <?php if ($is_admin) {  ?>
-                            <li><a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>"><i class="fas fa-cog text-crimson"></i>관리자</a></li>
-                                <?php }  ?>
-                            <li><a href="<?php echo G5_BBS_URL ?>/logout.php"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
-                            <?php } else {  ?>
-                            <li><a href="<?php echo G5_BBS_URL ?>/login.php"><i class="fas fa-unlock-alt"></i>로그인</a></li>
-                            <li><a href="<?php echo G5_BBS_URL ?>/register.php"><i class="fas fa-user-plus"></i>회원가입</a></li>
-                            <?php }  ?>
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-plus-circle"></i>추가메뉴
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a href="<?php echo G5_BBS_URL ?>/new.php">새글</a>
-                                    <a href="<?php echo G5_BBS_URL ?>/best.php">인기게시물</a>
-                                    <a href="<?php echo G5_BBS_URL ?>/faq.php">자주묻는 질문</a>
-                                    <a href="<?php echo G5_BBS_URL ?>/qalist.php">1:1문의</a>
-                                    <?php if ($is_member) { // 회원일 경우 ?>
-                                    <a href="<?php echo G5_BBS_URL; ?>/member_confirm.php?url=register_form.php">회원정보수정</a>
-                                    <?php } ?>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="header-title">
-            <div class="container">
-                <?php /* ===== 사이트 로고 시작 ===== */ ?>
-                <?php if ($is_admin == 'super' && !G5_IS_MOBILE) { ?>
-                <div class="adm-edit-btn btn-edit-mode" style="top:0;left:12px;text-align:left">
-                    <div class="btn-group">
-                        <a href="<?php echo G5_ADMIN_URL; ?>/?dir=theme&amp;pid=biz_info&amp;amode=logo&amp;thema=<?php echo $theme; ?>&amp;wmode=1" onclick="eb_admset_modal(this.href); return false;" class="ae-btn-l"><i class="far fa-edit"></i> 로고 설정</a>
-                        <a href="<?php echo G5_ADMIN_URL; ?>/?dir=theme&amp;pid=biz_info&amp;amode=logo&amp;thema=<?php echo $theme; ?>" target="_blank" class="ae-btn-r" title="새창 열기">
-                            <i class="fas fa-external-link-alt"></i>
-                        </a>
-                    </div>
-                </div>
-                <?php } ?>
-                <a href="<?php echo G5_URL; ?>" class="title-logo">
-                <?php if ($logo == 'text') { ?>
-                    <h1><?php echo $config['cf_title']; ?></h1>
-                <?php } else if ($logo == 'image') { ?>
-                    <?php if (!G5_IS_MOBILE) { ?>
-                    <?php if (file_exists($top_logo) && !is_dir($top_logo)) { ?>
-                    <img src="<?php echo $logo_src['top']; ?>" class="site-logo" alt="<?php echo $config['cf_title']; ?>">
-                    <?php } else { ?>
-                    <img src="<?php echo EYOOM_THEME_URL; ?>/image/site_logo.svg" class="site-logo" alt="<?php echo $config['cf_title']; ?>">
-                    <?php } ?>
-                    <?php } else { ?>
-                    <?php if (file_exists($top_mobile_logo) && !is_dir($top_mobile_logo)) { ?>
-                    <img src="<?php echo $logo_src['mobile_top']; ?>" class="site-logo" alt="<?php echo $config['cf_title']; ?>">
-                    <?php } else { ?>
-                    <img src="<?php echo EYOOM_THEME_URL; ?>/image/site_logo.svg" class="site-logo" alt="<?php echo $config['cf_title']; ?>">
-                    <?php } ?>
-                    <?php } ?>
-                <?php } ?>
-                </a>
-                <?php /* ===== 사이트 로고 끝 ===== */ ?>
-
-                <div class="header-title-search d-none d-lg-block">
-                    <form name="fsearchbox" method="get" action="<?php echo G5_BBS_URL; ?>/search.php" onsubmit="return fsearchbox_submit(this);" class="eyoom-form">
-                    <input type="hidden" name="sfl" value="wr_subject||wr_content">
-                    <input type="hidden" name="sop" value="and">
-                    <label for="modal_sch_stx" class="sound_only"><strong>검색어 입력 필수</strong></label>
-                    <div class="input input-button">
-                        <input type="text" name="stx" id="modal_sch_stx" class="sch_stx" maxlength="20" placeholder="전체 게시판 검색">
-                        <div class="button"><input type="submit"><i class="fas fa-search"></i></div>
-                    </div>
-                    </form>
-                </div>
-
-                <div class="header-title-btn">
-                    <div class="title-btn">
-                        <a <?php if ($is_member) { ?>href="<?php echo G5_URL; ?>/?<?php echo $member['mb_id']; ?>"<?php } else { ?>href="javascript:void(0);" onclick="alert('회원만 접근하실 수 있습니다.');"<?php } ?>>
-                            <div class="title-btn-in">
-                                <span class="title-btn-text">마이홈</span>
-                                <i class="fas fa-caret-square-right"></i>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="title-btn">
-                        <a <?php if ($is_member) { ?>href="<?php echo G5_URL; ?>/mypage/"<?php } else { ?>href="javascript:void(0);" onclick="alert('회원만 접근하실 수 있습니다.');"<?php } ?>>
-                            <div class="title-btn-in title-btn-navy">
-                                <span class="title-btn-text">마이페이지</span>
-                                <i class="fas fa-caret-square-right"></i>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="header-title-mobile-btn">
-                    <button type="button" class="navbar-toggler search-toggle mobile-search-btn">
-                        <span class="sr-only">검색 버튼</span>
-                        <span class="fas fa-search"></span>
-                    </button>
-                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLeft" aria-controls="offcanvasLeft">
-                        <span class="sr-only">메뉴 버튼</span>
-                        <span class="fas fa-bars"></span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="nav-wrap">
-            <div class="container">
-                <nav class="navbar navbar-expand-lg">
-                    <div class="sidebar-left offcanvas offcanvas-start" tabindex="-1" id="offcanvasLeft" aria-controls="offcanvasLeftLabel">
-                        <div class="sidebar-left-content">
-                            <div class="offcanvas-header">
-                                <h5 class="offcanvas-title f-s-16r" id="offcanvasLeftLabel"><i class="fas fa-bars m-r-10 text-gray"></i>NAVIGATION</h5>
-                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                            </div>
-                            <?php /* ---------- 모바일용 컨텐츠 시작 // 991픽셀 이하에서만 출력 ---------- */ ?>
-                            <?php if ($eyoom['is_shop_theme'] == 'y' || $is_member) { ?>
-                            <div class="sidebar-member-menu">
-                                <?php if (defined('G5_USE_SHOP') && G5_USE_SHOP && $eyoom['is_shop_theme'] == 'y') { ?>
-                                <a href="<?php echo G5_SHOP_URL; ?>" class="btn-e btn-e-md btn-e-navy btn-e-block m-t-10 m-b-10">
-                                    쇼핑몰<i class="far fa-caret-square-right m-l-5"></i>
-                                </a>
-                                <?php } ?>
-                                <?php if ($is_member) { // 회원일 경우 ?>
-                                <div class="m-t-10">
-                                    <a href="<?php echo G5_URL; ?>/?<?php echo $member['mb_id']; ?>" class="sidebar-member-btn-box">
-                                        <div class="sidebar-member-btn">
-                                            마이홈
-                                        </div>
-                                    </a>
-                                    <a href="<?php echo G5_URL; ?>/mypage/" class="sidebar-member-btn-box">
-                                        <div class="sidebar-member-btn float-end">
-                                            마이페이지
-                                        </div>
-                                    </a>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="m-t-10 m-b-10">
-                                    <a <?php if (!G5_IS_MOBILE) { ?>href="javascript:void(0);" onclick="memo_modal();"<?php } else { ?>href="<?php echo G5_BBS_URL; ?>/memo.php" target="_blank"<?php } ?> class="sidebar-member-btn-box">
-                                        <div class="sidebar-member-btn">
-                                            쪽지<?php if ($memo_not_read) { ?><span class="badge badge-e badge-crimson m-l-5"><?php echo $memo_not_read; ?></span><?php } ?>
-                                        </div>
-                                    </a>
-                                    <a href="<?php echo G5_URL; ?>/mypage/respond.php" class="sidebar-member-btn-box">
-                                        <div class="sidebar-member-btn float-end">
-                                            내글반응<?php if ( $respond_not_read >= 1 ) { ?><span class="badge badge-e badge-crimson m-l-5"><?php echo $respond_not_read; ?></span><?php } ?>
-                                        </div>
-                                    </a>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <?php } else { ?>
-                                <div class="m-t-10 m-b-10">
-                                    <a href="<?php echo G5_BBS_URL ?>/login.php" class="sidebar-member-btn-box">
-                                        <div class="sidebar-member-btn">
-                                            로그인
-                                        </div>
-                                    </a>
-                                    <a href="<?php echo G5_BBS_URL ?>/register.php" class="sidebar-member-btn-box">
-                                        <div class="sidebar-member-btn float-end">
-                                            회원가입
-                                        </div>
-                                    </a>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <?php } ?>
-                            </div>
-                            <?php } ?>
-                            <?php /* ---------- 모바일용 컨텐츠 끝 ---------- */ ?>
-                            <ul class="navbar-nav">
-                                <?php if ($is_admin == 'super' && !G5_IS_MOBILE) { ?>
-                                <div class="adm-edit-btn btn-edit-mode" style="top:0;text-align:left">
-                                    <div class="btn-group">
-                                        <a href="<?php echo G5_ADMIN_URL; ?>/?dir=theme&amp;pid=menu_list&amp;thema=<?php echo $theme; ?>&amp;wmode=1" onclick="eb_admset_modal(this.href); return false;" class="ae-btn-l"><i class="far fa-edit"></i> 메뉴 설정</a>
-                                        <a href="<?php echo G5_ADMIN_URL; ?>/?dir=theme&amp;pid=menu_list&amp;thema=<?php echo $theme; ?>" target="_blank" class="ae-btn-r" title="새창 열기">
-                                            <i class="fas fa-external-link-alt"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <?php } ?>
-                                <li class="navbar-nav-home">
-                                    <a href="<?php echo G5_URL ?>" class="nav-link">HOME</a>
-                                </li>
-
-                                <?php if (isset($menu) && is_array($menu)) { ?>
-                                <?php foreach ($menu as $key => $menu_1) { ?>
-                                <li class="dropdown">
-                                    <a href="<?php echo $menu_1['me_link']; ?>" target="_<?php echo $menu_1['me_target']; ?>" class="dropdown-toggle nav-link">
-                                        <?php if (isset($menu_1['me_icon']) && $menu_1['me_icon']) { ?><i class="<?php echo $menu_1['me_icon']; ?> nav-cate-icon margin-right-5"></i><?php } ?>
-                                        <?php echo $menu_1['me_name']?>
-                                    </a>
-                                    <?php if (isset($menu_1['submenu']) && is_array($menu_1['submenu'])) { ?>
-                                    <a href="#" class="cate-dropdown-open <?php if (isset($menu_1['active']) && $menu_1['active']) echo 'show'; ?>" data-bs-toggle="dropdown"></a>
-                                    <?php } ?>
-                                    <?php $index2 = $size2 = 0; ?>
-                                    <?php if (isset($menu_1['submenu']) && is_array($menu_1['submenu'])) { $size2 = count($menu_1['submenu']); ?>
-                                    <?php foreach ($menu_1['submenu'] as $subkey => $menu_2) { ?>
-                                    <?php if ($index2 == 0) { ?>
-                                    <div class="dropdown-menu <?php if (isset($menu_1['active']) && $menu_1['active']) echo 'show'; ?>">
-                                        <ul>
-                                    <?php } ?>
-                                        <li class="dropdown-submenu">
-                                            <a href="<?php echo $menu_2['me_link']; ?>" target="_<?php echo $menu_2['me_target']; ?>" class="dropdown-item nav-link <?php if (isset($menu_2['active']) && $menu_2['active']) echo 'active';?>">
-                                                <span class="submenu-marker"></span>
-                                                <?php if (isset($menu_2['me_icon']) && $menu_2['me_icon']) { ?>
-                                                <i class="<?php echo $menu_2['me_icon']; ?> m-r-5"></i>
-                                                <?php } ?>
-                                                <?php echo $menu_2['me_name']; ?>
-                                                <?php if ($menu_2['new']) { ?>
-                                                <i class="far fa-check-circle text-indigo"></i>
-                                                <?php } ?>
-                                                <?php if (isset($menu_2['sub']) && $menu_2['sub'] == 'on') { ?>
-                                                <i class="fas fa-angle-right sub-caret hidden-sm hidden-xs"></i><i class="fas fa-angle-down sub-caret hidden-md hidden-lg"></i>
-                                                <?php } ?>
-                                            </a>
-                                            <?php $index3 = $size3 = 0; ?>
-                                            <?php if (isset($menu_2['subsub']) && is_array($menu_2['subsub'])) { $size3 = count($menu_2['subsub']); ?>
-                                            <?php foreach ($menu_2['subsub'] as $ssubkey => $menu_3) { ?>
-                                            <?php if ($index3 == 0) { ?>
-                                            <ul class="dropdown-menu">
-                                            <?php } ?>
-                                                <li class="dropdown-submenu">
-                                                    <a href="<?php echo $menu_3['me_link']; ?>" target="_<?php echo $menu_3['me_target']; ?>" class="dropdown-item nav-link <?php if (isset($menu_3['active']) && $menu_3['active']) echo 'active';?>">
-                                                        <span class="submenu-marker"></span>
-                                                        <?php if (isset($menu_3['me_icon']) && $menu_3['me_icon']) { ?>
-                                                        <i class="<?php echo $menu_3['me_icon']; ?> m-r-5"></i>
-                                                        <?php } ?>
-                                                        <?php echo $menu_3['me_name']; ?>
-                                                        <?php if ($menu_3['new']) { ?>
-                                                        <i class="far fa-check-circle text-indigo"></i>
-                                                        <?php } ?>
-                                                        <?php if (isset($menu_3['sub']) && $menu_3['sub'] == 'on') { ?>
-                                                        <i class="fas fa-angle-right sub-caret hidden-sm hidden-xs"></i><i class="fas fa-angle-down sub-caret hidden-md hidden-lg"></i>
-                                                        <?php } ?>
-                                                    </a>
-                                                </li>
-                                            <?php if ($index3 == $size3 - 1) { ?>
-                                            </ul>
-                                            <?php } ?>
-                                            <?php $index3++; } ?>
-                                            <?php } ?>
-                                        </li>
-                                    <?php if ($index2 == $size2 - 1) { ?>
-                                        </ul>
-                                    </div>
-                                    <?php } ?>
-                                    <?php $index2++; } ?>
-                                    <?php } ?>
-                                </li>
-                                <?php } ?>
-                                <?php } ?>
-                                        
-                                <?php if ($is_megamenu == 'yes') { ?>
-                                <li class="dropdown dropdown-mega-menu d-none d-lg-block">
-                                    <a data-bs-toggle="dropdown" class="nav-link dropdown-toggle" href="#"><i class="fas fa-bars"></i></a>
-                                    <div class="dropdown-menu">
-                                        <ul class="mega-menu d-lg-flex">
-                                        <?php if (is_array($menu)) { ?>
-                                            <?php foreach ($menu as $key => $menu_1) { ?>
-                                            <li class="mega-menu-col">
-                                            <h5><a href="<?php echo $menu_1['me_link']; ?>" target="_<?php echo $menu_1['me_target']; ?>" class="<?php if ($menu_1['active']) echo 'active';?>"><?php echo $menu_1['me_name']?></a></h5>
-                                                <?php $index2 = $size2 = 0; ?>
-                                                <?php if (isset($menu_1['submenu']) && is_array($menu_1['submenu'])) { $size2 = count($menu_1['submenu']); ?>
-                                                <?php foreach ($menu_1['submenu'] as $subkey => $menu_2) { ?>
-                                                <?php if ($index2 == 0) { ?>
-                                                <ul>
-                                                <?php } ?>
-                                                    <li>
-                                                        <a href="<?php echo $menu_2['me_link']; ?>" target="_<?php echo $menu_2['me_target']; ?>" class="mega-menu-item <?php if ($menu_2['active']) echo 'active';?>"><?php echo $menu_2['me_name']; ?></a>
-                                                        <?php $index3 = $size3 = 0; ?>
-                                                        <?php if (isset($menu_2['subsub']) && is_array($menu_2['subsub'])) { $size3 = count($menu_2['subsub']); ?>
-                                                        <?php foreach ($menu_2['subsub'] as $ssubkey => $menu_3) { ?>
-                                                        <?php if ($index3 == 0) { ?>
-                                                        <ul class="menu3-ul">
-                                                        <?php } ?>
-                                                            <li>
-                                                                <a href="<?php echo $menu_3['me_link']; ?>" target="_<?php echo $menu_3['me_target']; ?>" class="mega-menu-item <?php if (isset($menu_3['active']) && $menu_3['active']) echo 'active';?>"><?php echo $menu_3['me_name']; ?></a>
-                                                            </li>
-                                                        <?php if ($index3 == $size3 - 1) { ?>
-                                                        </ul>
-                                                        <?php } ?>
-                                                        <?php $index3++; } ?>
-                                                        <?php } ?>
-                                                    </li>
-                                                <?php if ($index2 == $size2 - 1) { ?>
-                                                </ul>
-                                                <?php } ?>
-                                                <?php $index2++; } ?>
-                                                <?php } ?>
-                                            </li>
-                                            <?php } ?>
-                                        <?php } ?>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <?php } ?>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
             </div>
         </div>
     </header>
     <?php /*----- header 끝 -----*/ ?>
+
+    <header class="header-wrapper modern-nav">
+        <!--Nav with Logo & search-->
+        <div class="container nav-container">
+            <div class="row nav-logo-wrapper">
+
+                <!--Logo-->
+                <div class="col-3 logo-wrap">
+                    <a href="<?php echo G5_URL; ?>" class="title-logo">
+                        <?php if ($logo == 'text') { ?>
+                            <h1><?php echo $config['cf_title']; ?></h1>
+                        <?php } else if ($logo == 'image') { ?>
+                            <?php if (file_exists($top_logo) && !is_dir($top_logo)) { ?>
+                                <img src="<?php echo $logo_src['top']; ?>" class="site-logo" alt="<?php echo $config['cf_title']; ?>">
+                            <?php } else { ?>
+                                <img src="<?php echo EYOOM_THEME_URL; ?>/image/site_logo.svg" class="site-logo" alt="<?php echo $config['cf_title']; ?>">
+                            <?php } ?>
+                        <?php } ?>
+                    </a>
+                </div>
+
+                <!--Navigation & search-->
+                <div class="col-8 d-flex justify-content-between align-items-center d-none d-lg-flex">
+                    <ul class="nav-lists-start d-flex gap-3 flex-wrap align-items-center justify-content-end w-100">
+
+                        <li class="modern-nav-link">
+                            <a href="#">홍길동님 11,181,887 P2U</a>
+                        </li>
+                        <li class="modern-nav-link">
+                            <a href="<?php echo G5_SHOP_URL; ?>/cart.php">장바구니</a>
+                        </li>
+                        <li class="modern-nav-link">
+                            <a <?php if ($is_member) { ?>href="<?php echo G5_URL; ?>/mypage/"<?php } else { ?>href="javascript:void(0);" onclick="alert('회원만 접근하실 수 있습니다.');"<?php } ?>>마이홈</a>
+                        </li>
+                        <li class="modern-nav-link">
+                            <a <?php if ($is_member) { ?>href="<?php echo G5_URL; ?>/?<?php echo $member['mb_id']; ?>"<?php } else { ?>href="javascript:void(0);" onclick="alert('회원만 접근하실 수 있습니다.');"<?php } ?>>마이페이지</a>
+                        </li>
+                        <?php if ($is_member) {  ?>
+                            <?php if ($is_admin) {  ?>
+                                <li class="modern-nav-link"><a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>">관리자</a></li>
+                            <?php }  ?>
+                            <li class="modern-nav-link"><a href="<?php echo G5_BBS_URL ?>/logout.php">로그아웃</a></li>
+                        <?php } else {  ?>
+                            <li class="modern-nav-link"><a href="<?php echo G5_BBS_URL ?>/login.php">로그인</a></li>
+                            <li class="modern-nav-link"><a href="<?php echo G5_BBS_URL ?>/register.php">회원가입</a></li>
+                        <?php }  ?>
+                        <li class="modern-nav-link">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    더보기
+                                </a>
+                                <ul class="dropdown-menu link-dropdown" aria-labelledby="dropdownMenuButton">
+                                    <li><a href="<?php echo G5_BBS_URL ?>/new.php">새글</a></li>
+                                    <li><a href="<?php echo G5_BBS_URL ?>/best.php">인기게시물</a></li>
+                                    <li><a href="<?php echo G5_BBS_URL ?>/faq.php">자주묻는 질문</a></li>
+                                    <li><a href="<?php echo G5_BBS_URL ?>/qalist.php">1:1문의</a></li>
+                                    <?php if ($is_member) { // 회원일 경우 ?>
+                                        <li><a href="<?php echo G5_BBS_URL; ?>/member_confirm.php?url=register_form.php">회원정보수정</a></li>
+                                    <?php } ?>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <!--Search-->
+                        <li class="search-wrap d-none d-lg-block modern-nav-link">
+                            <form name="fsearchbox" method="get" action="<?php echo G5_BBS_URL; ?>/search.php" onsubmit="return fsearchbox_submit(this);" class="eyoom-form">
+                                <div class="input-group bg-light">
+                                        <input  type="text" name="stx" id="modal_sch_stx"maxlength="20" class="form-control bg-light sch_stx" placeholder="상품명 검색" aria-label="상품명 검색" value="<?= isset($_GET['stx']) ? $_GET['stx'] :"" ?>">
+                                        <input type="hidden" name="sfl" value="wr_subject||wr_content">
+                                        <input type="hidden" name="sop" value="and">
+                                        <div class="input-group-append">
+                                            <button class="btn" type="submit">
+                                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.16663 2.33334C4.94496 2.33334 2.33329 4.94501 2.33329 8.16667C2.33329 11.3883 4.94496 14 8.16663 14C9.73825 14 11.1647 13.3785 12.2136 12.3678C12.2355 12.3393 12.2596 12.3119 12.2857 12.2857C12.3118 12.2596 12.3393 12.2356 12.3678 12.2137C13.3784 11.1648 14 9.73829 14 8.16667C14 4.94501 11.3883 2.33334 8.16663 2.33334ZM14.0265 12.8481C15.0529 11.565 15.6666 9.93752 15.6666 8.16667C15.6666 4.02454 12.3088 0.666672 8.16663 0.666672C4.02449 0.666672 0.666626 4.02454 0.666626 8.16667C0.666626 12.3088 4.02449 15.6667 8.16663 15.6667C9.93747 15.6667 11.565 15.0529 12.848 14.0266L15.9107 17.0893C16.2361 17.4147 16.7638 17.4147 17.0892 17.0893C17.4147 16.7638 17.4147 16.2362 17.0892 15.9107L14.0265 12.8481Z" fill="#2F333C"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                </div>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+
+                <!--Mobile Navigation-->
+                <div class="col-12 mobile-links justify-content-between align-items-center">
+                    <ul class="nav-lists-start d-flex gap-3 flex-wrap align-items-center justify-content-end w-100">
+                        <li>
+                            <a href="#">P2U내역</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <!--Mega menu-->
+        <div class="container mega-menu-container">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-between align-items-center d-none d-lg-flex p-0">
+                    <ul class="nav-lists-start d-flex gap-5 flex-wrap align-items-center justify-content-start w-100">
+                        <!--Mega menu main links-->
+                        <li class="mega-menu-link with-icon">
+                            <a href="#" class="mega-menu-link-text"><i class="fas fa-bars"></i> 전체상품</a>
+
+                            <!--Mega menu sub links-->
+                            <ul class="mega-menu-dropdown">
+                                <li class="mega-menu-dropdown-link">
+                                    <span class="mega-menu-dropdown-text">뷰티/피부 <i class="fa fa-angle-right" aria-hidden="true"></i></span>
+
+                                    <!--Mega menu links-->
+                                    <ul class="mega-menu-dropdown-sub">
+                                        <li class="mega-menu-dropdown-sub-link">
+                                            <span class="mega-menu-dropdown-sub-text">스킨케어 <i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                                            <ul class="mega-menu-dropdown-leaf-sub">
+                                                <li class="mega-menu-dropdown-sub-link">
+                                                    <a href="#" class="mega-menu-dropdown-link-text">클렌징 </a>
+                                                </li>
+                                                <li class="mega-menu-dropdown-sub-link">
+                                                    <a href="#" class="mega-menu-dropdown-link-text">스킨/토너/미스트</a>
+                                                </li>
+                                                <li class="mega-menu-dropdown-sub-link">
+                                                    <a href="#" class="mega-menu-dropdown-link-text">로션/에멀젼</a>
+                                                </li>
+                                                <li class="mega-menu-dropdown-sub-link">
+                                                    <a href="#" class="mega-menu-dropdown-link-text">에센스/세럼</a>
+                                                </li>
+
+                                                <li class="mega-menu-dropdown-sub-link">
+                                                    <a href="#" class="mega-menu-dropdown-link-text">크림/오일</a>
+                                                </li>
+                                                <li class="mega-menu-dropdown-sub-link">
+                                                    <a href="#" class="mega-menu-dropdown-link-text">마스크/팩/스틱제품</a>
+                                                </li>
+                                                <li class="mega-menu-dropdown-sub-link">
+                                                    <a href="#" class="mega-menu-dropdown-link-text">선케어(자외선차단)</a>
+                                                </li>
+                                                <li class="mega-menu-dropdown-sub-link">
+                                                    <a href="#" class="mega-menu-dropdown-link-text">화장품세트</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="mega-menu-dropdown-sub-link">
+                                            <span class="mega-menu-dropdown-sub-text">메이크업 <i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                                        </li>
+                                        <li class="mega-menu-dropdown-sub-link">
+                                            <span class="mega-menu-dropdown-sub-text">헤어/바디 <i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                                        </li>
+                                        <li class="mega-menu-dropdown-sub-link">
+                                            <span class="mega-menu-dropdown-sub-text">남성전용 화장품 <i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                                        </li>
+                                        <li class="mega-menu-dropdown-sub-link">
+                                            <span class="mega-menu-dropdown-sub-text">향수 <i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                                        </li>
+                                        <li class="mega-menu-dropdown-sub-link">
+                                            <span class="mega-menu-dropdown-sub-text">뷰티기기/소품 <i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                                        </li>
+                                    </ul>
+                                    <!--Mega menu links-->
+                                </li>
+                                <li class="mega-menu-dropdown-link">
+                                    <span class="mega-menu-dropdown-text">신선푸드 <i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                                </li>
+                                <li class="mega-menu-dropdown-link">
+                                    <span class="mega-menu-dropdown-text">가공푸드 <i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                                </li>
+                                <li class="mega-menu-dropdown-link">
+                                    <span class="mega-menu-dropdown-text">패션잡화 <i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                                </li>
+                                <li class="mega-menu-dropdown-link">
+                                    <span class="mega-menu-dropdown-text">디지털 가전 <i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                                </li>
+                                <li class="mega-menu-dropdown-link">
+                                    <span class="mega-menu-dropdown-text">생활/건강 <i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                                </li>
+                                <li class="mega-menu-dropdown-link">
+                                    <span class="mega-menu-dropdown-text">가구/인테리어 <i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                                </li>
+                                <li class="mega-menu-dropdown-link">
+                                    <span class="mega-menu-dropdown-text">자동차/공구 <i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                                </li>
+                                <li class="mega-menu-dropdown-link">
+                                    <span class="mega-menu-dropdown-text">취미/여행 <i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                                </li>
+                                <li class="mega-menu-dropdown-link">
+                                    <span class="mega-menu-dropdown-text">추석선물</span>
+                                </li>
+                            </ul>
+                            <!--Mega menu sub links-->
+                        </li>
+                        <li class="mega-menu-link">
+                            <a href="#" class="mega-menu-link-text">P2U소개</a>
+                        </li>
+                        <li class="mega-menu-link">
+                            <a href="#" class="mega-menu-link-text">히트상품</a>
+                        </li>
+                        <li class="mega-menu-link">
+                            <a href="#" class="mega-menu-link-text">브랜드관</a>
+                        </li>
+                        <li class="mega-menu-link">
+                            <a href="#" class="mega-menu-link-text">추석선물</a>
+                        </li>
+                        <li class="mega-menu-link">
+                            <a href="#" class="mega-menu-link-text">이벤트</a>
+                        </li>
+                        <li class="mega-menu-link">
+                            <a href="#" class="mega-menu-link-text">공모전</a>
+                        </li>
+                        <!--Mega menu main links-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
 
     <?php if(!defined('_INDEX_')) { // 메인이 아닐때 ?>
     <?php /*----- page title 시작 -----*/ ?>
